@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme {
+  /* Dynamic custom branding colors matching the dashboard mockup */
+  --color-brand-orange: #FF7A00;
+  --color-brand-bg: #F8F9FA;
+
+
+}
+
+/* Base element styles using Tailwind v4 utilities */
+body {
+  background-color: var(--color-brand-bg);
+  @apply text-slate-800 antialiased;
+}
