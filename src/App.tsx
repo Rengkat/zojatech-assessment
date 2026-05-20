@@ -5,6 +5,7 @@ import { RegisterForm } from "./pages/RegisterForm";
 import { CheckMail } from "./pages/CheckMail";
 import { VerifyEmail } from "./pages/VerifyEmail";
 import { VerifiedSuccess } from "./pages/VerifiedSuccess";
+import { Login } from "./pages/Login";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="check-mail" element={<CheckMail />} />
           <Route path="verify-email" element={<VerifyEmail />} />
           <Route path="verified-success" element={<VerifiedSuccess />} />
+          <Route path="login" element={<Login />} />
         </Route>
       </Routes>
     </BrowserRouter>
