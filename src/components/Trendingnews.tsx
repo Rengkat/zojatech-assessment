@@ -25,12 +25,12 @@ const newsItems: NewsItem[] = [
 
 export const TrendingNews: React.FC = () => (
   <div className="bg-white rounded-2xl p-5 shadow-sm">
-    <h2 className="text-sm font-bold text-slate-800 mb-4">Trending News</h2>
+    <h2 className="text-sm lg:text-base font-bold text-slate-800 mb-4">Trending News</h2>
     <div className="flex flex-col gap-3">
       {newsItems.map((item) => (
         <div
           key={item.title}
-          className="flex items-center gap-3 cursor-pointer group shadow-sm rounded-xl p-2">
+          className="flex items-center gap-3 cursor-pointer group shadow-sm rounded-xl p-2 my-1">
           <img
             src={item.image}
             alt={item.title}

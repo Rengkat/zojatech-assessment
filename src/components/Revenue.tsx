@@ -59,10 +59,12 @@ const revenueItems: RevenueItem[] = [
 
 export const Revenue: React.FC = () => (
   <div className="bg-white rounded-2xl p-5 shadow-sm">
-    <h2 className="text-sm font-bold text-slate-800 mb-4">Revenue</h2>
+    <h2 className="text-sm lg:text-base font-bold text-slate-800 mb-4">Revenue</h2>
     <div className="flex flex-col gap-3">
       {revenueItems.map((item) => (
-        <div key={item.label} className="flex items-center justify-between gap-3">
+        <div
+          key={item.label}
+          className="flex items-center justify-between gap-3 p-2 shadow-sm rounded-xl">
           <div>
             <p className="text-sm font-bold text-slate-800">{item.amount}</p>
             <p className="text-[11px] text-slate-400 mt-0.5">{item.label}</p>
