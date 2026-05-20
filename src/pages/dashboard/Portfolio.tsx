@@ -4,6 +4,7 @@ import { StatCards } from "../../components/Statcards";
 import { OverviewChart } from "../../components/Overviewchart";
 import { TrendingPosts } from "../../components/Trendingposts";
 import { PotentialMembers } from "../../components/Potentialmembers";
+import { RightPanel } from "../../components/RightPanel";
 
 export const Portfolio: React.FC = () => {
   return (
@@ -24,6 +25,7 @@ export const Portfolio: React.FC = () => {
         </div>
 
         {/* ── Right panel ── */}
+        <RightPanel />
       </div>
     </div>
   );
