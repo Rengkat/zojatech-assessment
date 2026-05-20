@@ -3,6 +3,7 @@ import GlobalHeaderActions from "../../components/GlobalHeaderActions";
 import { StatCards } from "../../components/Statcards";
 import { OverviewChart } from "../../components/Overviewchart";
 import { TrendingPosts } from "../../components/Trendingposts";
+import { PotentialMembers } from "../../components/Potentialmembers";
 
 export const Portfolio: React.FC = () => {
   return (
@@ -19,6 +20,7 @@ export const Portfolio: React.FC = () => {
           <StatCards />
           <OverviewChart />
           <TrendingPosts />
+          <PotentialMembers />
         </div>
 
         {/* ── Right panel ── */}
