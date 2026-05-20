@@ -1,4 +1,14 @@
 import React, { useState } from "react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Cell,
+} from "recharts";
 
 const data = [
   { month: "JAN", value: 620 },
@@ -54,6 +64,30 @@ export const OverviewChart: React.FC = () => {
       </div>
 
       {/* Chart */}
+      <ResponsiveContainer width="100%" height={220}>
+        <BarChart data={data} barSize={28} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
+          <CartesianGrid vertical={false} stroke="#F1F5F9" strokeDasharray="" />
+          <XAxis
+            dataKey="month"
+            axisLine={false}
+            tickLine={false}
+            tick={{ fill: "#94a3b8", fontSize: 11, fontWeight: 500 }}
+            dy={8}
+          />
+          <YAxis
+            axisLine={false}
+            tickLine={false}
+            tick={{ fill: "#94a3b8", fontSize: 11 }}
+            ticks={[0, 200, 400, 600, 800, 1000]}
+          />
+          <Tooltip content={<CustomTooltip />} cursor={{ fill: "transparent" }} />
+          <Bar dataKey="value" radius={[6, 6, 6, 6]}>
+            {data.map((entry) => (
+              <Cell key={entry.month} fill={entry.month === "JUN" ? "#F97316" : "#E2E8F0"} />
+            ))}
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
     </div>
   );
 };
