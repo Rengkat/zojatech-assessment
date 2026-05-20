@@ -18,7 +18,7 @@ export const CheckMail: React.FC = () => {
       </p>
 
       <button
-        onClick={() => navigate("/register/verify")}
+        onClick={() => navigate("/verify-email")}
         className="w-full bg-brand-orange hover:bg-orange-600 text-white font-medium py-3 rounded-xl text-sm transition-colors shadow-sm">
         Confirm Email
       </button>

@@ -3,6 +3,7 @@ import { AuthLayout } from "./layouts/AuthLayout";
 import { RegisterOptions } from "./pages/RegisterOptions";
 import { RegisterForm } from "./pages/RegisterForm";
 import { CheckMail } from "./pages/CheckMail";
+import { VerifyEmail } from "./pages/VerifyEmail";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="register" element={<RegisterOptions />} />
           <Route path="form" element={<RegisterForm />} />
           <Route path="check-mail" element={<CheckMail />} />
+          <Route path="verify-email" element={<VerifyEmail />} />
         </Route>
       </Routes>
     </BrowserRouter>
