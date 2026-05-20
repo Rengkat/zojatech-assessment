@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import verifieEmailIcon from "../assets/verifiedEmail.svg";
+import verifieEmailIcon from "../../assets/verifiedEmail.svg";
 
 export const VerifiedSuccess: React.FC = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ export const VerifiedSuccess: React.FC = () => {
       </p>
 
       <button
-        onClick={() => navigate("/portfolio")}
+        onClick={() => navigate("/dashboard")}
         className="w-full bg-brand-orange hover:bg-orange-600 text-white font-medium py-3 rounded-xl text-sm transition-colors shadow-sm">
         Continue
       </button>

@@ -1,11 +1,12 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthLayout } from "./layouts/AuthLayout";
-import { RegisterOptions } from "./pages/RegisterOptions";
-import { RegisterForm } from "./pages/RegisterForm";
-import { CheckMail } from "./pages/CheckMail";
-import { VerifyEmail } from "./pages/VerifyEmail";
-import { VerifiedSuccess } from "./pages/VerifiedSuccess";
-import { Login } from "./pages/Login";
+import { RegisterOptions } from "./pages/auth/RegisterOptions";
+import { RegisterForm } from "./pages/auth/RegisterForm";
+import { CheckMail } from "./pages/auth/CheckMail";
+import { VerifyEmail } from "./pages/auth/VerifyEmail";
+import { VerifiedSuccess } from "./pages/auth/VerifiedSuccess";
+import { Login } from "./pages/auth/Login";
+import { DashboardLayout } from "./layouts/DashboardLayout";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="verified-success" element={<VerifiedSuccess />} />
           <Route path="login" element={<Login />} />
         </Route>
+        <Route path="/portfolio" element={<DashboardLayout />}></Route>
       </Routes>
     </BrowserRouter>
   );

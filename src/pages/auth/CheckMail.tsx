@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import mailBox from "../assets/mailbox.svg";
+import mailBox from "../../assets/mailbox.svg";
 export const CheckMail: React.FC = () => {
   const navigate = useNavigate();
 
