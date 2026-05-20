@@ -1,11 +1,14 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { Search, Plus, Bell } from "lucide-react";
+import { Sidebar } from "../components/SideBar";
 
 export const DashboardLayout: React.FC = () => {
   return (
-    <div className="min-h-screen bg-[#F6F6F6] pl-[200px]">
-      <div className="px-0 py-7 max-w-[1400px] mx-auto border-black border-2">
+    <div className="min-h-screen bg-[#F8F9FA] pl-[200px]">
+      <Sidebar />
+
+      <div className="px-8 py-7 max-w-[1400px] mx-auto">
         {/* Header */}
         <header title="header" className="flex justify-between items-center mb-8">
           <h1 className="text-2xl font-bold text-slate-800">My Portfolio</h1>
@@ -40,7 +43,6 @@ export const DashboardLayout: React.FC = () => {
             </button>
           </div>
         </header>
-
         {/* Page content */}
         <Outlet />
       </div>
