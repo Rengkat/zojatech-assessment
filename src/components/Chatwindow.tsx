@@ -53,8 +53,8 @@ const MessageBubble: React.FC<{
           className={`max-w-[65%] px-4 py-2.5 rounded-[18px] text-[13.5px] leading-relaxed
             ${
               sent
-                ? "bg-[#fed7aa] text-amber-900 rounded-br-[4px]"
-                : "bg-slate-100 text-slate-700 rounded-bl-[4px]"
+                ? "bg-[#F1F1F1] text-orange-400 rounded-br-[2px]"
+                : "bg-[#F1F1F1] text-slate-700 rounded-bl-[2px]"
             }`}>
           {msg.text}
         </div>
