@@ -12,7 +12,7 @@ export const AuthLayout: React.FC = () => {
           <img src={logo} alt="Buddy" />
         </div>
 
-        <div className="space-y-8 mt-[10rem]">
+        <div className="space-y-8 mt-[8rem]">
           {[
             "Track real-time overview of company's financial performance.",
             "Track created projects budget against actual revenue and expenses.",
