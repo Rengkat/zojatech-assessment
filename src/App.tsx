@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthLayout } from "./layouts/AuthLayout";
 import { RegisterOptions } from "./pages/RegisterOptions";
+import { RegisterForm } from "./pages/RegisterForm";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Route path="/" element={<Navigate to="/register" replace />} />
         <Route path="/" element={<AuthLayout />}>
           <Route path="register" element={<RegisterOptions />} />
+          <Route path="form" element={<RegisterForm />} />
         </Route>
       </Routes>
     </BrowserRouter>
