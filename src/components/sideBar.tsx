@@ -1,23 +1,14 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import {
-  User,
-  Users,
-  MessageSquare,
-  TrendingUp,
-  DollarSign,
-  Settings,
-  LogOut,
-  X,
-} from "lucide-react";
+import { User, Users, Mail, TrendingUp, Settings, LogOut, X, CircleDollarSign } from "lucide-react";
 import logo from "../assets/logo.svg";
 
 const navItems = [
   { icon: User, label: "My Portfolio", path: "/dashboard" },
   { icon: Users, label: "My Group", path: "/dashboard/group" },
-  { icon: MessageSquare, label: "Messages", path: "/dashboard/messages" },
+  { icon: Mail, label: "Messages", path: "/dashboard/messages" },
   { icon: TrendingUp, label: "Analytics", path: "/dashboard/analytics" },
-  { icon: DollarSign, label: "Pack", path: "/dashboard/pack" },
+  { icon: CircleDollarSign, label: "Pack", path: "/dashboard/pack" },
   { icon: Settings, label: "Settings", path: "/dashboard/settings" },
 ];
 
