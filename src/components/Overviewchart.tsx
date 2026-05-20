@@ -46,7 +46,7 @@ export const OverviewChart: React.FC = () => {
     <div className="bg-white rounded-2xl p-6 shadow-sm">
       {/* Header row */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-        <h2 className="text-base font-bold text-slate-800">Overview</h2>
+        <h2 className="text-base lg:text-2xl font-bold text-slate-800">Overview</h2>
         <div className="flex items-center gap-2 flex-wrap">
           {filters.map((f) => (
             <button
@@ -55,7 +55,7 @@ export const OverviewChart: React.FC = () => {
               className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
                 activeFilter === f
                   ? "bg-brand-orange text-white shadow-sm"
-                  : "bg-transparent text-slate-400 border border-slate-200 hover:border-slate-300"
+                  : "bg-[#F6F6F6] text-slate-400 shadow hover:border-slate-300"
               }`}>
               {f}
             </button>

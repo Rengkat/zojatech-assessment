@@ -1,6 +1,8 @@
 import React from "react";
 import GlobalHeaderActions from "../../components/GlobalHeaderActions";
 import { StatCards } from "../../components/Statcards";
+import { OverviewChart } from "../../components/Overviewchart";
+import { TrendingPosts } from "../../components/Trendingposts";
 
 export const Portfolio: React.FC = () => {
   return (
@@ -15,6 +17,8 @@ export const Portfolio: React.FC = () => {
         {/* ── Left / Main column ── */}
         <div className="flex-1 min-w-0 flex flex-col gap-4">
           <StatCards />
+          <OverviewChart />
+          <TrendingPosts />
         </div>
 
         {/* ── Right panel ── */}
