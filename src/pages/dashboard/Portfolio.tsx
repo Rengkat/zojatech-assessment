@@ -1,5 +1,6 @@
 import React from "react";
 import GlobalHeaderActions from "../../components/GlobalHeaderActions";
+import { StatCards } from "../../components/Statcards";
 
 export const Portfolio: React.FC = () => {
   return (
@@ -12,7 +13,9 @@ export const Portfolio: React.FC = () => {
       {/* Dashboard Main Grid Content */}
       <div className="flex gap-6 items-start">
         {/* ── Left / Main column ── */}
-        <div className="flex-1 min-w-0 flex flex-col gap-4">{/* <PortfolioHeader /> */}</div>
+        <div className="flex-1 min-w-0 flex flex-col gap-4">
+          <StatCards />
+        </div>
 
         {/* ── Right panel ── */}
       </div>
