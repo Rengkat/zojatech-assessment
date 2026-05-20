@@ -13,12 +13,12 @@ import {
 import logo from "../assets/logo.svg";
 
 const navItems = [
-  { icon: User, label: "My Portfolio", path: "/portfolio" },
-  { icon: Users, label: "My Group", path: "/group" },
-  { icon: MessageSquare, label: "Messages", path: "/messages" },
-  { icon: TrendingUp, label: "Analytics", path: "/analytics" },
-  { icon: DollarSign, label: "Pack", path: "/pack" },
-  { icon: Settings, label: "Settings", path: "/settings" },
+  { icon: User, label: "My Portfolio", path: "/dashboard" },
+  { icon: Users, label: "My Group", path: "/dashboard/group" },
+  { icon: MessageSquare, label: "Messages", path: "/dashboard/messages" },
+  { icon: TrendingUp, label: "Analytics", path: "/dashboard/analytics" },
+  { icon: DollarSign, label: "Pack", path: "/dashboard/pack" },
+  { icon: Settings, label: "Settings", path: "/dashboard/settings" },
 ];
 
 interface SidebarProps {
@@ -28,6 +28,13 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const { pathname } = useLocation();
+
+  const isActive = (itemPath: string) => {
+    if (itemPath === "/dashboard") {
+      return pathname === "/dashboard";
+    }
+    return pathname.startsWith(itemPath);
+  };
 
   return (
     <>
@@ -42,7 +49,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           {/* Navigation */}
           <nav className="flex flex-col">
             {navItems.map((item) => {
-              const active = pathname.startsWith(item.path);
+              const active = isActive(item.path);
               return (
                 <Link
                   key={item.path}
@@ -79,7 +86,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         </div>
       </aside>
 
-      {/* Mobile Sidebar - slides in from left */}
+      {/* Mobile Sidebar */}
       <aside
         className={`
           lg:hidden w-[200px] bg-white min-h-screen flex flex-col justify-between
@@ -88,7 +95,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           transition-transform duration-300 ease-in-out
           ${isOpen ? "translate-x-0 shadow-xl" : "-translate-x-full"}
         `}>
-        {/* Close button */}
         <button
           className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition-colors"
           onClick={onClose}
@@ -97,15 +103,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         </button>
 
         <div>
-          {/* Logo */}
           <div className="flex items-center gap-2 px-6 mb-10">
             <img src={logo} alt="Buddy" className="h-8" />
           </div>
 
-          {/* Navigation */}
           <nav className="flex flex-col">
             {navItems.map((item) => {
-              const active = pathname.startsWith(item.path);
+              const active = isActive(item.path);
               return (
                 <Link
                   key={item.path}
@@ -127,7 +131,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           </nav>
         </div>
 
-        {/* User Profile Footer */}
         <div className="flex flex-col items-center text-center px-6">
           <img
             src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80"

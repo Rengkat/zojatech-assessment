@@ -8,6 +8,7 @@ import { VerifiedSuccess } from "./pages/auth/VerifiedSuccess";
 import { Login } from "./pages/auth/Login";
 import { DashboardLayout } from "./layouts/DashboardLayout";
 import { Portfolio } from "./pages/dashboard/Portfolio";
+import Messages from "./pages/dashboard/Messages";
 
 function App() {
   return (
@@ -23,8 +24,9 @@ function App() {
           <Route path="verified-success" element={<VerifiedSuccess />} />
           <Route path="login" element={<Login />} />
         </Route>
-        <Route path="/portfolio" element={<DashboardLayout />}>
+        <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Portfolio />} />
+          <Route path="messages" element={<Messages />} />
         </Route>
       </Routes>
     </BrowserRouter>
