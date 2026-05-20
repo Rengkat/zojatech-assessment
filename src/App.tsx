@@ -7,6 +7,7 @@ import { VerifyEmail } from "./pages/auth/VerifyEmail";
 import { VerifiedSuccess } from "./pages/auth/VerifiedSuccess";
 import { Login } from "./pages/auth/Login";
 import { DashboardLayout } from "./layouts/DashboardLayout";
+import { Portfolio } from "./pages/dashboard/PortfolioMainContent";
 
 function App() {
   return (
@@ -22,7 +23,9 @@ function App() {
           <Route path="verified-success" element={<VerifiedSuccess />} />
           <Route path="login" element={<Login />} />
         </Route>
-        <Route path="/portfolio" element={<DashboardLayout />}></Route>
+        <Route path="/portfolio" element={<DashboardLayout />}>
+          <Route index element={<Portfolio />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
