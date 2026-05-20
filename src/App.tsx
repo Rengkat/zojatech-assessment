@@ -7,7 +7,7 @@ import { VerifyEmail } from "./pages/auth/VerifyEmail";
 import { VerifiedSuccess } from "./pages/auth/VerifiedSuccess";
 import { Login } from "./pages/auth/Login";
 import { DashboardLayout } from "./layouts/DashboardLayout";
-import { Portfolio } from "./pages/dashboard/PortfolioMainContent";
+import { Portfolio } from "./pages/dashboard/Portfolio";
 
 function App() {
   return (
