@@ -1,7 +1,6 @@
 import React from "react";
-import { Mail, Globe } from "lucide-react";
+import { Mail } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import google from "../assets/google.svg";
 
 export const RegisterOptions: React.FC = () => {
   const navigate = useNavigate();
