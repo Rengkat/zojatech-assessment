@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../../redux/services/AuthApiSlice";
 import { setPendingEmail } from "../../redux/features/authSlice";
-import { validate, type Errors } from "../../utils/helperFuntions";
+import type { Errors } from "../../utils/helperFuntions";
 
 const EMAIL_MAX = 60;
 const PASSWORD_MAX = 15;
@@ -122,7 +122,7 @@ export const Login: React.FC = () => {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full bg-brand-orange hover:bg-orange-600 text-white font-medium py-3 rounded-xl text-sm transition-colors shadow-sm mt-2 disabled:opacity-60 disabled:cursor-not-allowed">
+          className="w-full bg-slate-200 hover:bg-orange-600 text-slate-400 hover:text-white font-medium py-3 rounded-xl text-sm transition-colors shadow-sm mt-2 disabled:opacity-60 disabled:cursor-not-allowed">
           {isLoading ? "Signing in…" : "Login"}
         </button>
       </form>
