@@ -1,4 +1,4 @@
-POST https://fe-test.revvex.io/api/admin/register
+POST https://fe-test.zojapay.com/api/admin/register
 Content-Type: application/json
 
 {
