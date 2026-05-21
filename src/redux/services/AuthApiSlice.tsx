@@ -83,8 +83,16 @@ export const authApi = createApi({
     resendOtp: builder.mutation<ResendOtpResponse, ResendOtpPayload>({
       query: (body) => ({ url: "/resend-otp", method: "POST", body }),
     }),
+    logout: builder.mutation<{ success: boolean; message: string }, void>({
+      query: () => ({ url: "/logout", method: "POST" }),
+    }),
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation, useVerifyOtpMutation, useResendOtpMutation } =
-  authApi;
+export const {
+  useRegisterMutation,
+  useLoginMutation,
+  useVerifyOtpMutation,
+  useResendOtpMutation,
+  useLogoutMutation,
+} = authApi;

@@ -1,7 +1,10 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { User, Users, Mail, TrendingUp, Settings, LogOut, X, CircleDollarSign } from "lucide-react";
 import logo from "../assets/logo.svg";
+import { logout, type AuthState } from "../redux/features/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useLogoutMutation } from "../redux/services/AuthApiSlice";
 
 const navItems = [
   { icon: User, label: "My Portfolio", path: "/dashboard" },
@@ -19,12 +22,27 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((s: { auth: AuthState }) => s.auth.user);
+  const [logoutUser, { isLoading }] = useLogoutMutation();
 
   const isActive = (itemPath: string) => {
     if (itemPath === "/dashboard") {
       return pathname === "/dashboard";
     }
     return pathname.startsWith(itemPath);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser().unwrap();
+    } catch {
+      // Server down or token expired — clear local state anyway
+    } finally {
+      dispatch(logout());
+      navigate("/login");
+    }
   };
 
   return (
@@ -70,9 +88,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           />
           <h4 className="font-semibold text-sm text-slate-800">Theresa Milly</h4>
           <p className="text-xs text-slate-400 mb-5">Influencer</p>
-          <button className="w-full flex items-center justify-center gap-2 py-2.5 bg-orange-100 text-brand-orange rounded-xl text-sm font-medium hover:bg-orange-50 transition-colors">
+          <button
+            onClick={handleLogout}
+            disabled={isLoading}
+            className="w-full flex items-center justify-center gap-2 py-2.5 bg-orange-100 text-brand-orange rounded-xl text-sm font-medium hover:bg-orange-50 transition-colors disabled:opacity-60">
             <LogOut size={15} />
-            Logout
+            {isLoading ? "Logging out…" : "Logout"}
           </button>
         </div>
       </aside>
@@ -130,9 +151,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           />
           <h4 className="font-semibold text-sm text-slate-800">Theresa Milly</h4>
           <p className="text-xs text-slate-400 mb-5">Influencer</p>
-          <button className="w-full flex items-center bg-orange-100 justify-center gap-2 py-2.5   text-brand-orange rounded-xl text-sm font-medium hover:bg-orange-200 transition-colors">
+          <button
+            onClick={handleLogout}
+            disabled={isLoading}
+            className="w-full flex items-center bg-orange-100 justify-center gap-2 py-2.5 text-brand-orange rounded-xl text-sm font-medium hover:bg-orange-200 transition-colors disabled:opacity-60">
             <LogOut size={15} />
-            Logout
+            {isLoading ? "Logging out…" : "Logout"}
           </button>
         </div>
       </aside>

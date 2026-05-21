@@ -65,6 +65,8 @@ export const customBaseQuery: BaseQueryFn<
       data = await mockVerifyOtp((body as any)?.otp);
     } else if (url === "/resend-otp" && method === "POST") {
       data = await mockResendOtp((body as any)?.email);
+    } else if (url === "/logout" && method === "POST") {
+      data = { success: true, message: "Logged out" };
     } else {
       return {
         error: {
