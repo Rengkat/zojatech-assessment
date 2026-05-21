@@ -1,8 +1,15 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import type { AuthState } from "../redux/features/authSlice";
 import logo from "../assets/logo.svg";
 import tick from "../assets/ticks.svg";
+
 export const AuthLayout: React.FC = () => {
+  const isAuthenticated = useSelector((s: { auth: AuthState }) => s.auth.isAuthenticated);
+
+  if (isAuthenticated) return <Navigate to="/dashboard" replace />;
+
   return (
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-[#FFFFFF]">
       {/* Left Column */}

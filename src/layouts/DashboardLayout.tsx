@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import { Menu } from "lucide-react";
 import { Sidebar } from "../components/SideBar";
+import { useSelector } from "react-redux";
+import type { AuthState } from "../redux/features/authSlice";
 
 export const DashboardLayout: React.FC = () => {
+  const isAuthenticated = useSelector((s: { auth: AuthState }) => s.auth.isAuthenticated);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   useEffect(() => {
     const handleResize = () => {
