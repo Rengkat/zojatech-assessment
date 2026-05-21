@@ -1,0 +1,7 @@
+POST https://fe-test.zojapay.com/api/admin/login
+Content-Type: application/json
+
+{
+  "email": "willl@gmail.com",
+  "password": "Password1!"
+}
