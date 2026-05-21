@@ -1,4 +1,5 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { customBaseQuery } from "../../utils/customBaseQuery";
 
 export interface RegisterPayload {
   first_name: string;
@@ -64,49 +65,23 @@ export interface ResendOtpResponse {
 
 export const authApi = createApi({
   reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "https://fe-test.zojapay.com/api/admin",
-    prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as any).auth.token;
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
-      headers.set("Accept", "application/json");
-      return headers;
-    },
-  }),
+  // Only change: fetchBaseQuery → customBaseQuery (mock fallback built-in)
+  baseQuery: customBaseQuery,
   endpoints: (builder) => ({
-    // POST /admin/register
     register: builder.mutation<RegisterResponse, RegisterPayload>({
-      query: (body) => ({
-        url: "/register",
-        method: "POST",
-        body,
-      }),
+      query: (body) => ({ url: "/register", method: "POST", body }),
     }),
 
     login: builder.mutation<LoginResponse, LoginPayload>({
-      query: (body) => ({
-        url: "/login",
-        method: "POST",
-        body,
-      }),
+      query: (body) => ({ url: "/login", method: "POST", body }),
     }),
 
     verifyOtp: builder.mutation<VerifyOtpResponse, VerifyOtpPayload>({
-      query: (body) => ({
-        url: "/verify-otp",
-        method: "POST",
-        body,
-      }),
+      query: (body) => ({ url: "/verify-otp", method: "POST", body }),
     }),
 
     resendOtp: builder.mutation<ResendOtpResponse, ResendOtpPayload>({
-      query: (body) => ({
-        url: "/resend-otp",
-        method: "POST",
-        body,
-      }),
+      query: (body) => ({ url: "/resend-otp", method: "POST", body }),
     }),
   }),
 });
