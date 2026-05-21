@@ -2,12 +2,31 @@ import React, { useState } from "react";
 import { User, Mail, Lock } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
+type Fields = { first_name: string; last_name: string; email: string; password: string };
+type Errors = Partial<Fields>;
+
 export const RegisterForm: React.FC = () => {
   const navigate = useNavigate();
 
+  const [values, setValues] = useState<Fields>({
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+  });
+  const [fieldErrors, setFieldErrors] = useState<Errors>({});
+  const [globalError, setGlobalError] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setValues((p) => ({ ...p, [name]: value }));
+    setFieldErrors((p) => ({ ...p, [name]: undefined }));
+    setGlobalError("");
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("first");
+    console.log("Submitting with values:", values);
     // TODO: Execute logic or RTK Query triggers here...
     navigate("/register/check-mail");
   };
@@ -25,7 +44,10 @@ export const RegisterForm: React.FC = () => {
             <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
             <input
               type="text"
+              name="first_name"
               placeholder="First Name"
+              value={values.first_name}
+              onChange={handleChange}
               className="w-full border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange"
               required
             />
@@ -34,7 +56,10 @@ export const RegisterForm: React.FC = () => {
             <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
             <input
               type="text"
+              name="last_name"
               placeholder="Last Name"
+              value={values.last_name}
+              onChange={handleChange}
               className="w-full border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange"
               required
             />
@@ -45,7 +70,10 @@ export const RegisterForm: React.FC = () => {
           <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
           <input
             type="email"
+            name="email"
             placeholder="Work email"
+            value={values.email}
+            onChange={handleChange}
             className="w-full border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange"
             required
           />
@@ -55,7 +83,10 @@ export const RegisterForm: React.FC = () => {
           <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
           <input
             type="password"
+            name="password"
             placeholder="Password"
+            value={values.password}
+            onChange={handleChange}
             className="w-full border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange"
             required
           />
