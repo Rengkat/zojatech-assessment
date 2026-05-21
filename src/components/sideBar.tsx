@@ -24,7 +24,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((s: { auth: AuthState }) => s.auth.user);
   const [logoutUser, { isLoading }] = useLogoutMutation();
 
   const isActive = (itemPath: string) => {
