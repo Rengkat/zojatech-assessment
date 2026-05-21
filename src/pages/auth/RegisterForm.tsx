@@ -7,8 +7,9 @@ export const RegisterForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("first");
     // TODO: Execute logic or RTK Query triggers here...
-    navigate("/portfolio");
+    navigate("/register/check-mail");
   };
 
   return (

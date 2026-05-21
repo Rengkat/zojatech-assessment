@@ -18,10 +18,10 @@ function App() {
         <Route path="/" element={<Navigate to="/register" replace />} />
         <Route path="/" element={<AuthLayout />}>
           <Route path="register" element={<RegisterOptions />} />
-          <Route path="form" element={<RegisterForm />} />
-          <Route path="check-mail" element={<CheckMail />} />
-          <Route path="verify-email" element={<VerifyEmail />} />
-          <Route path="verified-success" element={<VerifiedSuccess />} />
+          <Route path="/register/form" element={<RegisterForm />} />
+          <Route path="/register/check-mail" element={<CheckMail />} />
+          <Route path="/register/verify-email" element={<VerifyEmail />} />
+          <Route path="/register/verified-success" element={<VerifiedSuccess />} />
           <Route path="login" element={<Login />} />
         </Route>
         <Route path="/dashboard" element={<DashboardLayout />}>

@@ -62,7 +62,7 @@ export const VerifyEmail: React.FC = () => {
 
   const handleConfirm = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/verified-success");
+    navigate("/register/verified-success");
   };
 
   return (
