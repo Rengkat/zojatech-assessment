@@ -48,7 +48,7 @@ export interface ResendOtpResponse {
   success: boolean;
   message: string;
   data: {
-    opt: number; // API typo — "opt" not "otp"
+    opt: number;
   };
 }
 

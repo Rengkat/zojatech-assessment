@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Loader2, AlertCircle, CheckCircle2, MailCheck } from "lucide-react";
+import { Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
 import { useVerifyOtpMutation, useResendOtpMutation } from "../../redux/services/AuthApiSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { setPendingOtp, type AuthState } from "../../redux/features/authSlice";

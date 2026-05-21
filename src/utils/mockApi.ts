@@ -20,7 +20,6 @@ const delay = (ms = 900) => new Promise((r) => setTimeout(r, ms));
 let _currentOtp = "1234";
 let _registeredEmails = new Set<string>();
 
-// ── Mock user store ────────────────────────────────────────────
 const MOCK_USER = {
   id: 4,
   first_name: "echoes",
@@ -32,8 +31,6 @@ const MOCK_USER = {
 };
 
 const MOCK_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.MOCK_TOKEN_FOR_LOCAL_DEVELOPMENT";
-
-// ── Handlers ───────────────────────────────────────────────────
 
 export async function mockLogin(body: LoginPayload): Promise<LoginResponse> {
   await delay();
