@@ -9,7 +9,7 @@ interface StatCardProps {
 }
 
 const StatCard: React.FC<StatCardProps> = ({ value, label, icon, iconBg }) => (
-  <div className="bg-white rounded-2xl px-6 py-5 flex items-center justify-between flex-1 min-w-0 shadow-sm">
+  <div className="bg-white rounded-2xl px-5 py-5 flex items-center justify-between flex-1 min-w-0 shadow-sm">
     <div>
       <p className="text-2xl font-bold text-slate-800 leading-tight">{value}</p>
       <p className="text-xs text-slate-400 mt-1 font-medium">{label}</p>
@@ -43,7 +43,7 @@ export const StatCards: React.FC = () => {
   ];
 
   return (
-    <div className="flex gap-4 flex-wrap sm:flex-nowrap">
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
       {stats.map((stat) => (
         <StatCard key={stat.label} {...stat} />
       ))}

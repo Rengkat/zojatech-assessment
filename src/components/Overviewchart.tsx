@@ -28,7 +28,7 @@ const data = [
 const filters = ["Robbin Hood", "Amreitrade", "Fidelity", "Charles"];
 
 const CustomTooltip = ({ active, payload, label }: any) => {
-  if (active && payload && payload.length) {
+  if (active && payload?.length) {
     return (
       <div className="bg-white border border-slate-100 rounded-xl px-3 py-2 shadow-lg text-xs">
         <p className="text-slate-500">{label}</p>
@@ -43,41 +43,42 @@ export const OverviewChart: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState("Robbin Hood");
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm">
-      {/* Header row */}
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-        <h2 className="text-base lg:text-2xl font-bold text-slate-800">Overview</h2>
-        <div className="flex items-center gap-2 flex-wrap">
+    <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm">
+      <div className="flex items-start sm:items-center justify-between gap-3 mb-5 flex-wrap sm:flex-nowrap">
+        <h2 className="text-base sm:text-xl lg:text-2xl font-bold text-slate-800 shrink-0">
+          Overview
+        </h2>
+        <div className="flex items-center gap-2 overflow-x-auto pb-0.5 scrollbar-none -mr-1 pr-1">
           {filters.map((f) => (
             <button
               key={f}
               onClick={() => setActiveFilter(f)}
-              className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                activeFilter === f
-                  ? "bg-brand-orange text-white shadow-sm"
-                  : "bg-[#F6F6F6] text-slate-400 shadow hover:border-slate-300"
-              }`}>
+              className={`px-3 sm:px-4 py-1.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap shrink-0
+                ${
+                  activeFilter === f
+                    ? "bg-orange-400 text-white shadow-sm"
+                    : "bg-[#F6F6F6] text-slate-400 hover:bg-slate-100"
+                }`}>
               {f}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Chart */}
-      <ResponsiveContainer width="100%" height={220}>
-        <BarChart data={data} barSize={28} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
-          <CartesianGrid vertical={false} stroke="#F1F5F9" strokeDasharray="" />
+      <ResponsiveContainer width="100%" height={200}>
+        <BarChart data={data} barSize={24} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
+          <CartesianGrid vertical={false} stroke="#F1F5F9" />
           <XAxis
             dataKey="month"
             axisLine={false}
             tickLine={false}
-            tick={{ fill: "#94a3b8", fontSize: 11, fontWeight: 500 }}
+            tick={{ fill: "#94a3b8", fontSize: 10, fontWeight: 500 }}
             dy={8}
           />
           <YAxis
             axisLine={false}
             tickLine={false}
-            tick={{ fill: "#94a3b8", fontSize: 11 }}
+            tick={{ fill: "#94a3b8", fontSize: 10 }}
             ticks={[0, 200, 400, 600, 800, 1000]}
           />
           <Tooltip content={<CustomTooltip />} cursor={{ fill: "transparent" }} />

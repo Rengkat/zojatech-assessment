@@ -50,9 +50,10 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
 );
 
 export const TrendingPosts: React.FC = () => (
-  <div className="bg-white rounded-2xl p-6 shadow-sm">
+  <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm">
     <h2 className="text-base lg:text-lg font-bold text-slate-800 mb-4">Trending Posts</h2>
-    <div className="flex gap-4 flex-wrap sm:flex-nowrap">
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {posts.map((post) => (
         <PostCard key={post.title} post={post} />
       ))}

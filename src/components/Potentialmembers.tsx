@@ -42,7 +42,7 @@ const members: Member[] = [
 ];
 
 const MemberCard: React.FC<{ member: Member }> = ({ member }) => (
-  <div className="flex flex-col items-center text-center gap-2 flex-1 min-w-[90px]">
+  <div className="flex flex-col items-center text-center gap-2 w-[90px] sm:flex-1 shrink-0">
     <img
       src={member.avatar}
       alt={member.name}
@@ -60,9 +60,10 @@ const MemberCard: React.FC<{ member: Member }> = ({ member }) => (
 );
 
 export const PotentialMembers: React.FC = () => (
-  <div className="bg-white rounded-2xl p-6 shadow-sm">
+  <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm">
     <h2 className="text-base lg:text-lg font-bold text-slate-800 mb-5">Potential Members</h2>
-    <div className="flex justify-between gap-2 overflow-x-auto pb-1">
+
+    <div className="flex gap-3 sm:gap-2 sm:justify-between overflow-x-auto pb-2 sm:pb-0 scrollbar-none">
       {members.map((m, i) => (
         <MemberCard key={i} member={m} />
       ))}
