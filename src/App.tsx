@@ -28,6 +28,7 @@ function App() {
           <Route index element={<Portfolio />} />
           <Route path="messages" element={<Messages />} />
         </Route>
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
