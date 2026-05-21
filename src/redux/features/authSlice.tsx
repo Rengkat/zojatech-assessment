@@ -6,6 +6,7 @@ export interface AuthState {
   token: string | null;
   isAuthenticated: boolean;
   pendingEmail: string | null;
+  pendingOtp: string | null; // OTP returned from register/resend response
 }
 
 const TOKEN_KEY = "buddy_token";
@@ -31,6 +32,7 @@ const initialState: AuthState = {
   user: loadUser(),
   isAuthenticated: !!loadToken(),
   pendingEmail: null,
+  pendingOtp: null,
 };
 
 const authSlice = createSlice({
@@ -42,11 +44,15 @@ const authSlice = createSlice({
       state.token = null;
       state.isAuthenticated = false;
       state.pendingEmail = null;
+      state.pendingOtp = null;
       localStorage.removeItem(TOKEN_KEY);
       localStorage.removeItem(USER_KEY);
     },
     setPendingEmail(state, action: { payload: string }) {
       state.pendingEmail = action.payload;
+    },
+    setPendingOtp(state, action: { payload: string }) {
+      state.pendingOtp = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -72,5 +78,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, setPendingEmail } = authSlice.actions;
+export const { logout, setPendingEmail, setPendingOtp } = authSlice.actions;
 export default authSlice.reducer;

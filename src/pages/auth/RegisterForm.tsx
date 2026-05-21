@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { validate, type Errors, type Fields } from "../../utils/helperFuntions";
 import { useRegisterMutation } from "../../redux/services/AuthApiSlice";
 import { useDispatch } from "react-redux";
-import { setPendingEmail, setPendingOtp } from "../../redux/slices/authSlice";
+import { setPendingEmail, setPendingOtp } from "../../redux/features/authSlice";
 import { InputField } from "../../components/InputField";
 
 export const RegisterForm: React.FC = () => {
