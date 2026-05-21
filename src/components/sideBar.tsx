@@ -70,7 +70,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           />
           <h4 className="font-semibold text-sm text-slate-800">Theresa Milly</h4>
           <p className="text-xs text-slate-400 mb-5">Influencer</p>
-          <button className="w-full flex items-center justify-center gap-2 py-2.5 border border-orange-200 text-brand-orange rounded-xl text-sm font-medium hover:bg-orange-50 transition-colors">
+          <button className="w-full flex items-center justify-center gap-2 py-2.5 bg-orange-100 text-brand-orange rounded-xl text-sm font-medium hover:bg-orange-50 transition-colors">
             <LogOut size={15} />
             Logout
           </button>
@@ -130,7 +130,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           />
           <h4 className="font-semibold text-sm text-slate-800">Theresa Milly</h4>
           <p className="text-xs text-slate-400 mb-5">Influencer</p>
-          <button className="w-full flex items-center justify-center gap-2 py-2.5 border border-orange-200 text-brand-orange rounded-xl text-sm font-medium hover:bg-orange-50 transition-colors">
+          <button className="w-full flex items-center bg-orange-100 justify-center gap-2 py-2.5   text-brand-orange rounded-xl text-sm font-medium hover:bg-orange-200 transition-colors">
             <LogOut size={15} />
             Logout
           </button>
