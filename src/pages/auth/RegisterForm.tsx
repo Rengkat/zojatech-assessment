@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { User, Mail, Lock } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { validate } from "../../utils/helperFuntions";
+import { useRegisterMutation } from "../../redux/services/AuthApiSlice";
 
 type Fields = { first_name: string; last_name: string; email: string; password: string };
 type Errors = Partial<Fields>;
 
 export const RegisterForm: React.FC = () => {
   const navigate = useNavigate();
+  const [register] = useRegisterMutation();
 
   const [values, setValues] = useState<Fields>({
     first_name: "",
@@ -24,11 +27,37 @@ export const RegisterForm: React.FC = () => {
     setGlobalError("");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Submitting with values:", values);
-    // TODO: Execute logic or RTK Query triggers here...
-    navigate("/register/check-mail");
+    setGlobalError("");
+
+    const errs = validate(values);
+    if (Object.keys(errs).length) {
+      setFieldErrors(errs);
+      return;
+    }
+
+    try {
+      const res = await register(values).unwrap();
+
+      if (res.success) {
+        // Store email so OTP page can use it for resend
+        // Some APIs return token on register → handled in authSlice extraReducers.
+
+        navigate("/register/check-mail", { state: { registered: true } });
+      }
+    } catch (err: any) {
+      const data = err?.data;
+      if (data?.errors) {
+        const mapped: Errors = {};
+        for (const [k, v] of Object.entries(data.errors)) {
+          (mapped as any)[k] = Array.isArray(v) ? (v as string[]).join(" ") : String(v);
+        }
+        setFieldErrors(mapped);
+      } else {
+        setGlobalError(data?.message ?? "Registration failed. Please try again.");
+      }
+    }
   };
 
   return (
