@@ -42,6 +42,7 @@ export const RegisterForm: React.FC = () => {
     try {
       const res = await register(values as any).unwrap();
       if (res.success) {
+        console.log(res);
         dispatch(setPendingEmail(values.email));
         // OTP returned in response (mock + real API)
         if (res.data?.otp) dispatch(setPendingOtp(String(res.data.otp)));
