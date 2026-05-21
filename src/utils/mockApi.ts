@@ -20,6 +20,7 @@ const delay = (ms = 900) => new Promise((r) => setTimeout(r, ms));
 let _currentOtp = "1234";
 let _registeredEmails = new Set<string>();
 
+// ── Mock user store ────────────────────────────────────────────
 const MOCK_USER = {
   id: 4,
   first_name: "echoes",
@@ -31,6 +32,8 @@ const MOCK_USER = {
 };
 
 const MOCK_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.MOCK_TOKEN_FOR_LOCAL_DEVELOPMENT";
+
+// ── Handlers ───────────────────────────────────────────────────
 
 export async function mockLogin(body: LoginPayload): Promise<LoginResponse> {
   await delay();
@@ -60,13 +63,13 @@ export async function mockRegister(body: RegisterPayload): Promise<RegisterRespo
     };
   }
   _registeredEmails.add(body.email);
-  // 4-digit OTP generation (for demo purposes, visible in console)
   _currentOtp = String(Math.floor(1000 + Math.random() * 9000));
   console.info(`[MOCK] OTP for ${body.email}: ${_currentOtp}`);
   return {
     success: true,
     message: "Registration successful",
     data: {
+      otp: Number(_currentOtp),
       user: {
         id: Date.now(),
         first_name: body.first_name,
@@ -103,4 +106,5 @@ export async function mockResendOtp(email: string): Promise<ResendOtpResponse> {
   };
 }
 
+/** Returns true when running in mock mode */
 export const isMockMode = () => import.meta.env.VITE_USE_MOCK !== "false";

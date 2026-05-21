@@ -3,10 +3,13 @@ import { User, Mail, Lock, Loader2, AlertCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { validate, type Errors, type Fields } from "../../utils/helperFuntions";
 import { useRegisterMutation } from "../../redux/services/AuthApiSlice";
+import { useDispatch } from "react-redux";
+import { setPendingEmail, setPendingOtp } from "../../redux/slices/authSlice";
 import { InputField } from "../../components/InputField";
 
 export const RegisterForm: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [register, { isLoading }] = useRegisterMutation();
 
   const [values, setValues] = useState<Fields>({
@@ -30,7 +33,6 @@ export const RegisterForm: React.FC = () => {
     setGlobalError("");
     setFieldErrors({});
 
-    // Client-side validation first
     const errs = validate(values);
     if (Object.keys(errs).length) {
       setFieldErrors(errs);
@@ -38,16 +40,16 @@ export const RegisterForm: React.FC = () => {
     }
 
     try {
-      const res = await register(values).unwrap();
+      const res = await register(values as any).unwrap();
       if (res.success) {
-        console.log("Registration successful:", res);
-        // Store email for OTP resend on the next screen
-        navigate("/register/check-mail", { state: { registered: true } });
+        dispatch(setPendingEmail(values.email));
+        // OTP returned in response (mock + real API)
+        if (res.data?.otp) dispatch(setPendingOtp(String(res.data.otp)));
+        navigate("/register/verify-email");
       }
     } catch (err: any) {
       const data = err?.data;
       if (data?.errors) {
-        // Map server field errors back onto inputs
         const mapped: Errors = {};
         for (const [k, v] of Object.entries(data.errors)) {
           (mapped as any)[k] = Array.isArray(v) ? (v as string[]).join(" ") : String(v);
@@ -66,7 +68,6 @@ export const RegisterForm: React.FC = () => {
         Proceed to create account and setup your organization
       </p>
 
-      {/* ── Global error banner ── */}
       {globalError && (
         <div className="flex items-start gap-2.5 bg-red-50 border border-red-200 rounded-xl px-4 py-3 mb-5">
           <AlertCircle size={15} className="text-red-500 mt-0.5 shrink-0" />
@@ -75,13 +76,12 @@ export const RegisterForm: React.FC = () => {
       )}
 
       <form onSubmit={handleSubmit} noValidate className="space-y-4">
-        {/* Name row */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <InputField
             icon={<User size={16} />}
             name="first_name"
             placeholder="First Name"
-            value={values.first_name}
+            value={values.first_name ?? ""}
             error={fieldErrors.first_name}
             onChange={handleChange}
           />
@@ -89,7 +89,7 @@ export const RegisterForm: React.FC = () => {
             icon={<User size={16} />}
             name="last_name"
             placeholder="Last Name"
-            value={values.last_name}
+            value={values.last_name ?? ""}
             error={fieldErrors.last_name}
             onChange={handleChange}
           />
@@ -115,7 +115,6 @@ export const RegisterForm: React.FC = () => {
           onChange={handleChange}
         />
 
-        {/* Submit */}
         <button
           type="submit"
           disabled={isLoading}
@@ -125,8 +124,7 @@ export const RegisterForm: React.FC = () => {
             disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-slate-100 disabled:hover:text-slate-400">
           {isLoading ? (
             <>
-              <Loader2 size={15} className="animate-spin" />
-              Creating account…
+              <Loader2 size={15} className="animate-spin" /> Creating account…
             </>
           ) : (
             "Create account"

@@ -37,6 +37,7 @@ export interface RegisterResponse {
   data: {
     user?: ApiUser;
     token?: string;
+    otp?: number;
   };
 }
 
@@ -62,7 +63,6 @@ export interface ResendOtpResponse {
     opt: number;
   };
 }
-
 export const authApi = createApi({
   reducerPath: "authApi",
   // Only change: fetchBaseQuery → customBaseQuery (mock fallback built-in)
