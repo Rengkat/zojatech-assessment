@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, Navigate } from "react-router-dom";
 import { Menu } from "lucide-react";
-import { Sidebar } from "../components/SideBar";
 import { useSelector } from "react-redux";
 import type { AuthState } from "../redux/features/authSlice";
+import { SideBar } from "../components/SideBar";
 
 export const DashboardLayout: React.FC = () => {
   const { isAuthenticated } = useSelector((s: { auth: AuthState }) => s.auth);
@@ -28,7 +28,7 @@ export const DashboardLayout: React.FC = () => {
         />
       )}
 
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <SideBar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Desktop sidebar spacer */}
       <div className="hidden lg:block w-[200px] shrink-0" aria-hidden="true" />

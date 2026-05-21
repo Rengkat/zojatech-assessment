@@ -2,8 +2,8 @@ import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { User, Users, Mail, TrendingUp, Settings, LogOut, X, CircleDollarSign } from "lucide-react";
 import logo from "../assets/logo.svg";
-import { logout, type AuthState } from "../redux/features/authSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/features/authSlice";
+import { useDispatch } from "react-redux";
 import { useLogoutMutation } from "../redux/services/AuthApiSlice";
 
 const navItems = [
@@ -20,7 +20,7 @@ interface SidebarProps {
   onClose: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
+export const SideBar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
