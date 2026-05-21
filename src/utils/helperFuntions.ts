@@ -1,5 +1,5 @@
-type Fields = { first_name: string; last_name: string; email: string; password: string };
-type Errors = Partial<Fields>;
+export type Fields = { first_name: string; last_name: string; email: string; password: string };
+export type Errors = Partial<Fields>;
 export function validate(v: Fields): Errors {
   const e: Errors = {};
   if (!v.first_name.trim()) e.first_name = "First name is required.";

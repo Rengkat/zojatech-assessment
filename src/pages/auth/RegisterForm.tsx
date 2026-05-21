@@ -1,15 +1,13 @@
 import React, { useState } from "react";
-import { User, Mail, Lock } from "lucide-react";
+import { User, Mail, Lock, Loader2, AlertCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { validate } from "../../utils/helperFuntions";
+import { validate, type Errors, type Fields } from "../../utils/helperFuntions";
 import { useRegisterMutation } from "../../redux/services/AuthApiSlice";
-
-type Fields = { first_name: string; last_name: string; email: string; password: string };
-type Errors = Partial<Fields>;
+import { InputField } from "../../components/InputField";
 
 export const RegisterForm: React.FC = () => {
   const navigate = useNavigate();
-  const [register] = useRegisterMutation();
+  const [register, { isLoading }] = useRegisterMutation();
 
   const [values, setValues] = useState<Fields>({
     first_name: "",
@@ -30,7 +28,9 @@ export const RegisterForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setGlobalError("");
+    setFieldErrors({});
 
+    // Client-side validation first
     const errs = validate(values);
     if (Object.keys(errs).length) {
       setFieldErrors(errs);
@@ -39,16 +39,15 @@ export const RegisterForm: React.FC = () => {
 
     try {
       const res = await register(values).unwrap();
-
       if (res.success) {
-        // Store email so OTP page can use it for resend
-        // Some APIs return token on register → handled in authSlice extraReducers.
-
+        console.log("Registration successful:", res);
+        // Store email for OTP resend on the next screen
         navigate("/register/check-mail", { state: { registered: true } });
       }
     } catch (err: any) {
       const data = err?.data;
       if (data?.errors) {
+        // Map server field errors back onto inputs
         const mapped: Errors = {};
         for (const [k, v] of Object.entries(data.errors)) {
           (mapped as any)[k] = Array.isArray(v) ? (v as string[]).join(" ") : String(v);
@@ -67,74 +66,81 @@ export const RegisterForm: React.FC = () => {
         Proceed to create account and setup your organization
       </p>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="relative">
-            <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-            <input
-              type="text"
-              name="first_name"
-              placeholder="First Name"
-              value={values.first_name}
-              onChange={handleChange}
-              className="w-full border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange"
-              required
-            />
-          </div>
-          <div className="relative">
-            <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-            <input
-              type="text"
-              name="last_name"
-              placeholder="Last Name"
-              value={values.last_name}
-              onChange={handleChange}
-              className="w-full border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange"
-              required
-            />
-          </div>
+      {/* ── Global error banner ── */}
+      {globalError && (
+        <div className="flex items-start gap-2.5 bg-red-50 border border-red-200 rounded-xl px-4 py-3 mb-5">
+          <AlertCircle size={15} className="text-red-500 mt-0.5 shrink-0" />
+          <p className="text-[13px] text-red-600">{globalError}</p>
         </div>
+      )}
 
-        <div className="relative">
-          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-          <input
-            type="email"
-            name="email"
-            placeholder="Work email"
-            value={values.email}
+      <form onSubmit={handleSubmit} noValidate className="space-y-4">
+        {/* Name row */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <InputField
+            icon={<User size={16} />}
+            name="first_name"
+            placeholder="First Name"
+            value={values.first_name}
+            error={fieldErrors.first_name}
             onChange={handleChange}
-            className="w-full border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange"
-            required
+          />
+          <InputField
+            icon={<User size={16} />}
+            name="last_name"
+            placeholder="Last Name"
+            value={values.last_name}
+            error={fieldErrors.last_name}
+            onChange={handleChange}
           />
         </div>
 
-        <div className="relative">
-          <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={values.password}
-            onChange={handleChange}
-            className="w-full border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange"
-            required
-          />
-        </div>
+        <InputField
+          icon={<Mail size={16} />}
+          name="email"
+          type="email"
+          placeholder="Work email"
+          value={values.email}
+          error={fieldErrors.email}
+          onChange={handleChange}
+        />
 
+        <InputField
+          icon={<Lock size={16} />}
+          name="password"
+          type="password"
+          placeholder="Password"
+          value={values.password}
+          error={fieldErrors.password}
+          onChange={handleChange}
+        />
+
+        {/* Submit */}
         <button
           type="submit"
-          className="w-full bg-slate-100 text-slate-400 font-medium py-3 rounded-xl text-sm transition-colors hover:bg-brand-orange hover:text-white mt-2">
-          Create account
+          disabled={isLoading}
+          className="w-full flex items-center justify-center gap-2 bg-slate-100 text-slate-400
+            font-medium py-3 rounded-xl text-sm transition-colors mt-2
+            hover:bg-orange-400 hover:text-white
+            disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-slate-100 disabled:hover:text-slate-400">
+          {isLoading ? (
+            <>
+              <Loader2 size={15} className="animate-spin" />
+              Creating account…
+            </>
+          ) : (
+            "Create account"
+          )}
         </button>
       </form>
 
       <p className="text-xs text-slate-400 mt-6 leading-relaxed">
         By clicking the button above, you agree to our{" "}
-        <a href="#" className="text-brand-orange hover:underline">
+        <a href="#" className="text-orange-400 hover:underline">
           Terms of Service
         </a>{" "}
         and{" "}
-        <a href="#" className="text-brand-orange hover:underline">
+        <a href="#" className="text-orange-400 hover:underline">
           Privacy Policy
         </a>
         .
@@ -142,7 +148,7 @@ export const RegisterForm: React.FC = () => {
 
       <div className="mt-8 pt-6 border-t border-slate-100 text-sm text-slate-500">
         Already have an account?{" "}
-        <Link to="/login" className="text-brand-orange font-medium hover:underline">
+        <Link to="/login" className="text-orange-400 font-medium hover:underline">
           Login
         </Link>
       </div>
