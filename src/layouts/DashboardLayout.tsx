@@ -3,7 +3,7 @@ import { Outlet, Navigate } from "react-router-dom";
 import { Menu } from "lucide-react";
 import { useSelector } from "react-redux";
 import type { AuthState } from "../redux/features/authSlice";
-import { SideBar } from "../components/SideBar";
+import SideBar from "../components/SideBar";
 
 export const DashboardLayout: React.FC = () => {
   const { isAuthenticated } = useSelector((s: { auth: AuthState }) => s.auth);

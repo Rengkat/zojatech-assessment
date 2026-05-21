@@ -20,7 +20,7 @@ interface SidebarProps {
   onClose: () => void;
 }
 
-export const SideBar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
+const SideBar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -162,3 +162,4 @@ export const SideBar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     </>
   );
 };
+export default SideBar;
