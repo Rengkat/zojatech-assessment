@@ -1,36 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import GlobalHeaderActions from "../../components/GlobalHeaderActions";
 import { ConversationList } from "../../components/Conversationlist";
 import { ChatWindow } from "../../components/Chatwindow";
-import { CONVERSATIONS, MESSAGES_BY_CONVO } from "../../mocks/messagesMocks";
+import { getConversations, getMessages, sendMessage } from "../../mocks/chatStorage";
+import type { Message } from "../../mocks/messagesMocks";
 import { ArrowLeft } from "lucide-react";
 
 const MY_AVATAR =
   "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80&fit=crop&crop=face";
 
 const Messages: React.FC = () => {
+  // Load from localStorage (seeded from mocks on first visit)
+  const [conversations, setConversations] = useState(() => getConversations());
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [mobileView, setMobileView] = useState<"list" | "chat">("list");
 
-  const activeConvo = CONVERSATIONS.find((c) => c.id === activeId) ?? null;
-  const messages = activeId ? (MESSAGES_BY_CONVO[activeId] ?? []) : [];
+  const activeConvo = conversations.find((c) => c.id === activeId) ?? null;
 
-  // Called when user taps a conversation on mobile
-  const handleSelect = (id: string) => {
+  // Select a conversation → load its messages from localStorage
+  const handleSelect = useCallback((id: string) => {
     setActiveId(id);
+    setMessages(getMessages(id));
     setMobileView("chat");
-  };
+  }, []);
 
-  // Back button on mobile chat view → return to list
-  const handleBack = () => {
-    setMobileView("list");
-  };
+  // Send a message → persist to localStorage → update UI instantly
+  const handleSend = useCallback(
+    (text: string, file?: { name: string }) => {
+      if (!activeId || (!text.trim() && !file)) return;
+      const newMsg = sendMessage(activeId, text.trim(), file);
+      setMessages((prev) => [...prev, newMsg]);
+      // Refresh conversation list so preview + time update
+      setConversations(getConversations());
+    },
+    [activeId],
+  );
+
+  const handleBack = () => setMobileView("list");
 
   return (
     <div className="flex flex-col flex-1 min-h-0">
-      {/* ── Page header ── */}
+      {/* Page header */}
       <header className="flex justify-between items-center mb-5 gap-3 shrink-0">
-        {/* On mobile chat view, show a back arrow + contact name instead */}
         <div className="flex items-center gap-2 min-w-0">
           {mobileView === "chat" && activeConvo && (
             <button
@@ -46,15 +58,12 @@ const Messages: React.FC = () => {
       </header>
 
       <div className="flex gap-4 flex-1 min-h-0 overflow-hidden bg-[#FFFFFF] px-4 py-8 rounded-2xl shadow-sm">
+        {/* Conversation list */}
         <div
-          className={`
-            flex-col min-h-0
-            w-full lg:w-[260px] lg:shrink-0
-            ${mobileView === "list" ? "flex" : "hidden"}
-            lg:flex
-          `}>
+          className={`flex-col min-h-0 w-full lg:w-[260px] lg:shrink-0
+            ${mobileView === "list" ? "flex" : "hidden"} lg:flex`}>
           <ConversationList
-            conversations={CONVERSATIONS}
+            conversations={conversations}
             activeId={activeId ?? ""}
             onSelect={handleSelect}
             currentUser={{
@@ -65,12 +74,10 @@ const Messages: React.FC = () => {
           />
         </div>
 
+        {/* Chat window */}
         <div
-          className={`
-            flex-col flex-1 min-w-0 min-h-0
-            ${mobileView === "chat" ? "flex" : "hidden"}
-            lg:flex
-          `}>
+          className={`flex-col flex-1 min-w-0 min-h-0
+            ${mobileView === "chat" ? "flex" : "hidden"} lg:flex`}>
           {activeConvo ? (
             <ChatWindow
               contact={{
@@ -80,10 +87,9 @@ const Messages: React.FC = () => {
               }}
               messages={messages}
               myAvatar={MY_AVATAR}
+              onSend={handleSend}
             />
           ) : (
-            /* Desktop empty state — mobile never sees this because
-               mobileView starts at "list" */
             <div className="hidden lg:flex flex-1 items-center justify-center bg-white rounded-2xl shadow-sm">
               <div className="text-center">
                 <div className="w-14 h-14 rounded-full bg-orange-50 flex items-center justify-center mx-auto mb-3">
