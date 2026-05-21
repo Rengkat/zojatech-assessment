@@ -96,7 +96,7 @@ const SideBar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         </div>
       </aside>
 
-      {/* Mobile Sidebar */}
+      {/* Mobile  */}
       <aside
         className={`
           lg:hidden w-[200px] bg-white min-h-screen flex flex-col justify-between
