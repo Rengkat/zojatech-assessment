@@ -75,6 +75,10 @@ const authSlice = createSlice({
         localStorage.setItem(USER_KEY, JSON.stringify(payload.data.user));
       }
     });
+
+    builder.addMatcher(authApi.endpoints.verifyOtp.matchFulfilled, (state) => {
+      state.isAuthenticated = true;
+    });
   },
 });
 

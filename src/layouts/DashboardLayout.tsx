@@ -6,9 +6,9 @@ import { useSelector } from "react-redux";
 import type { AuthState } from "../redux/features/authSlice";
 
 export const DashboardLayout: React.FC = () => {
-  const isAuthenticated = useSelector((s: { auth: AuthState }) => s.auth.isAuthenticated);
+  const { isAuthenticated, user } = useSelector((s: { auth: AuthState }) => s.auth);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  console.log(isAuthenticated, user);
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   useEffect(() => {

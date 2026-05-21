@@ -1,11 +1,3 @@
-/**
-
- * RTK Query base query that:
- *  1. Attempts the real API (https://fe-test.zojapay.com/api/admin)
- *  2. On NETWORK failure → silently falls through to mock handlers
- *  3. On API error (4xx/5xx) → returns the real error to the UI
- */
-
 import {
   fetchBaseQuery,
   type BaseQueryFn,
@@ -24,20 +16,19 @@ const rawBaseQuery = fetchBaseQuery({
   },
 });
 
-/** Detect network-level failures (server unreachable) */
-function isNetworkError(error: unknown): boolean {
+function shouldUseMock(error: unknown): boolean {
   if (!error) return false;
   const e = error as any;
-  // RTK Query wraps fetch errors as { status: 'FETCH_ERROR', error: string }
-  return (
-    e.status === "FETCH_ERROR" ||
-    e.status === "TIMEOUT_ERROR" ||
-    (typeof e.error === "string" &&
-      (e.error.includes("ETIMEDOUT") ||
-        e.error.includes("ECONNREFUSED") ||
-        e.error.includes("Failed to fetch") ||
-        e.error.includes("Network request failed")))
-  );
+  if (e.status === "FETCH_ERROR" || e.status === "TIMEOUT_ERROR" || e.status === 500) return true;
+  if (
+    typeof e.error === "string" &&
+    (e.error.includes("ETIMEDOUT") ||
+      e.error.includes("ECONNREFUSED") ||
+      e.error.includes("Failed to fetch") ||
+      e.error.includes("Network request failed"))
+  )
+    return true;
+  return false;
 }
 
 export const customBaseQuery: BaseQueryFn<
@@ -47,9 +38,15 @@ export const customBaseQuery: BaseQueryFn<
 > = async (args, api, extraOptions) => {
   const result = await rawBaseQuery(args, api, extraOptions);
 
-  if (!isNetworkError(result.error)) return result;
+  // Real 4xx (401, 422, etc.) → return directly, let UI handle it
+  if (!shouldUseMock(result.error)) return result;
 
-  console.warn("[customBaseQuery] Real API unreachable → using mock layer");
+  // Network error or 500 → fall through to mock layer
+  console.warn(
+    "[customBaseQuery] API unavailable (status:",
+    (result.error as any)?.status,
+    ") → using mock",
+  );
 
   const { url, method, body } =
     typeof args === "string" ? { url: args, method: "GET", body: undefined } : args;
@@ -66,6 +63,7 @@ export const customBaseQuery: BaseQueryFn<
     } else if (url === "/resend-otp" && method === "POST") {
       data = await mockResendOtp((body as any)?.email);
     } else if (url === "/logout" && method === "POST") {
+      await new Promise((r) => setTimeout(r, 300));
       data = { success: true, message: "Logged out" };
     } else {
       return {

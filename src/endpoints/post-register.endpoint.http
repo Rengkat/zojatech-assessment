@@ -2,8 +2,19 @@ POST https://fe-test.zojapay.com/api/admin/register
 Content-Type: application/json
 
 {
-    "first_name": "echoes",
-    "last_name": "willieams",
-    "email": "willl@gmail.com",
-    "password": "Password1!"
+  "first_name": "Alex",
+  "last_name": "Dev",
+  "email": "alexdev123test@gmail.com",
+  "password": "Password1!"
 }
+
+
+# POST https://fe-test.zojapay.com/api/admin/register
+# Content-Type: application/json
+
+# {
+#     "first_name": "jeniffer",
+#     "last_name": "Jan",
+#     "email": "janjikirit@gmail.com",
+#     "password": "Password1!"
+# }

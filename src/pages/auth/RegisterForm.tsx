@@ -119,7 +119,7 @@ export const RegisterForm: React.FC = () => {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full flex items-center justify-center gap-2 bg-slate-100 text-slate-400
+          className="w-full flex items-center justify-center gap-2 bg-orange-500 text-white
             font-medium py-3 rounded-xl text-sm transition-colors mt-2
             hover:bg-orange-400 hover:text-white
             disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-slate-100 disabled:hover:text-slate-400">
