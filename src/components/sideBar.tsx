@@ -37,7 +37,6 @@ const SideBar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     try {
       await logoutUser().unwrap();
     } catch {
-      // Server down or token expired — clear local state anyway
     } finally {
       dispatch(logout());
       navigate("/login");
